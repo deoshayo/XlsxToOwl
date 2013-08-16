@@ -139,7 +139,7 @@ public class ExcelImporter
 	 
     public static void main( String[] args )
     {	
-        ExcelImporter importer = new ExcelImporter("smallonto_mods.owl", "small_trial.xlsx");
+        ExcelImporter importer = new ExcelImporter("smallonto_empty.owl", "small_trial.xlsx");
         importer.ImportXlsxToOwl();
     }
 }
