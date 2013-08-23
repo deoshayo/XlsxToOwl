@@ -69,18 +69,20 @@ public class Importer
 			for(Integer sheetColumnNumber : sheetModel.keySet()) {
 				ExcelModelEntry modelEntry = sheetModel.get(sheetColumnNumber);
 				
-				OntProperty property = model.createOntProperty(model.getNsPrefixURI("")+modelEntry.getOntoProperty());
+				OntProperty property;
 				Resource classRange = XSD.xstring;
-				property.convertToDatatypeProperty();
 				
 				if(modelEntry.getKey().equalsIgnoreCase("fk")) {
+					property = model.createObjectProperty(model.getNsPrefixURI("")+modelEntry.getOntoProperty());
 					property.convertToFunctionalProperty();
-					property.convertToObjectProperty();
 					classRange = model.createClass(model.getNsPrefixURI("")+modelEntry.getDatatype());
-				} else if(modelEntry.getKey().equalsIgnoreCase("pk")) {
-					property.convertToFunctionalProperty();
+				} else {
+					property = model.createDatatypeProperty(model.getNsPrefixURI("")+modelEntry.getOntoProperty());
+					if(modelEntry.getKey().equalsIgnoreCase("pk")) {
+						property.convertToFunctionalProperty();
+					}
 				}
-				
+
 				property.setRange(classRange);
 				property.setDomain(sheetClass);
 			}

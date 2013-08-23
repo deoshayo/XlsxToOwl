@@ -37,8 +37,8 @@ public class Xlsx2Owl {
 	
 	public static void main(String[] args) {
 		Xlsx2Owl owl = new Xlsx2Owl();
-		owl.importXlsxModelToOwl("Data Extraction.xlsx", "fajar.owl");
-		owl.importXlsxDataToOwl("Data Extraction.xlsx", "fajar.owl");
+		owl.importXlsxModelToOwl("Data Extraction.xlsx", "emsebokinspection.owl");
+		owl.importXlsxDataToOwl("Data Extraction.xlsx", "emsebokinspection.owl");
 	}
 	
 }
