@@ -2,6 +2,7 @@ package at.ac.tuwien.importer.main;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -74,8 +75,10 @@ public class Importer
 				
 				if(modelEntry.getKey().equalsIgnoreCase("fk")) {
 					property = model.createObjectProperty(model.getNsPrefixURI("")+modelEntry.getOntoProperty());
-					property.convertToFunctionalProperty();
 					classRange = model.createClass(model.getNsPrefixURI("")+modelEntry.getDatatype());
+					if(!modelEntry.getAdditionalProperties().isEmpty()) {
+						createAdditionalProperties(classRange, modelEntry.getAdditionalProperties());
+					}
 				} else {
 					property = model.createDatatypeProperty(model.getNsPrefixURI("")+modelEntry.getOntoProperty());
 					if(modelEntry.getKey().equalsIgnoreCase("pk")) {
@@ -89,6 +92,15 @@ public class Importer
 		}
 	}
 	
+	private void createAdditionalProperties(Resource ontClass, List<String> additionalProps) {
+		Iterator<String> propsIterator = additionalProps.iterator();
+		while(propsIterator.hasNext()) {
+			String[] props = propsIterator.next().split("=");
+			OntProperty prop = model.createDatatypeProperty(getDefaultNS()+props[0]);
+			prop.setDomain(ontClass);
+		}
+	}
+	 
 	private void importData() {
 		for (XSSFSheet xssfSheet : workbook) {
 			if(xssfSheet.getSheetName().equalsIgnoreCase(OwlHelper.MAPPING_SHEET)) continue;
@@ -167,8 +179,9 @@ public class Importer
 			if(key.equalsIgnoreCase("pk")) map.setPrimaryKey(num);
 			int card = (int) row.getCell(7).getNumericCellValue();
 			List<String> allowedVals = Arrays.asList(row.getCell(8).getStringCellValue().split(";"));
+			List<String> addProps = Arrays.asList(row.getCell(8).getStringCellValue().split(";"));
 			
-			ExcelModelEntry entry = new ExcelModelEntry(excelColumn, ontoProperty, key, datatype, num, card, allowedVals);
+			ExcelModelEntry entry = new ExcelModelEntry(excelColumn, ontoProperty, key, datatype, num, card, allowedVals, addProps);
 			map.put(num, entry);
 		}
 	}

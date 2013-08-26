@@ -11,6 +11,7 @@ public class ExcelModelEntry {
 	private Integer	columnNumber;
 	private Integer cardinality;
 	private List<String> allowedValues;
+	private List<String> additionalProperties;
 	
 	public ExcelModelEntry() {
 		excelColumnName = null;
@@ -20,9 +21,11 @@ public class ExcelModelEntry {
 		columnNumber = null;
 		cardinality = null;
 		allowedValues = new ArrayList<String>();
+		additionalProperties = new ArrayList<String>();
 	}
 	
-	public ExcelModelEntry(String colName, String ontoProp, String key, String datatype, int colNum, int cardinality, List<String> allowedValues) {
+	public ExcelModelEntry(String colName, String ontoProp, String key, String datatype, 
+			int colNum, int cardinality, List<String> allowedValues, List<String> additionalProperties) {
 		excelColumnName = colName;
 		ontoProperty = ontoProp;
 		this.key = key;
@@ -30,6 +33,7 @@ public class ExcelModelEntry {
 		columnNumber = colNum;
 		this.cardinality = cardinality;
 		this.allowedValues = allowedValues;
+		this.additionalProperties = additionalProperties;
 	}
 	
 	public String getExcelColumnName() {
@@ -74,4 +78,13 @@ public class ExcelModelEntry {
 	public void setAllowedValues(List<String> allowedValues) {
 		this.allowedValues = allowedValues;
 	}
+
+	public List<String> getAdditionalProperties() {
+		return additionalProperties;
+	}
+
+	public void setAdditionalProperties(List<String> additionalProperties) {
+		this.additionalProperties = additionalProperties;
+	}
+	
 }

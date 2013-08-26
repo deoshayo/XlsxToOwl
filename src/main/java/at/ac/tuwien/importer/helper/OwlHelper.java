@@ -3,7 +3,6 @@ package at.ac.tuwien.importer.helper;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -35,7 +34,8 @@ public class OwlHelper {
 			e.printStackTrace();
 		} finally {
 			if (model.getNsPrefixURI("") == null) {
-				model.setNsPrefix("", DEFAULT_NS.replace("?", Long.toString(Calendar.getInstance().getTimeInMillis())));
+				model.setNsPrefix("", DEFAULT_NS.replace("?", ""));
+//				model.setNsPrefix("", DEFAULT_NS.replace("?", Long.toString(Calendar.getInstance().getTimeInMillis())));
 			}
 		}
 		return model;
